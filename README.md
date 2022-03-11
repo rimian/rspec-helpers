@@ -23,4 +23,4 @@ end
 
 ## CODE OF CONDUCT
 
-See CODE_OF_CONDUCT.md
+See [CODE_OF_CONDUCT.md](https://github.com/rimian/rspec-helpers/blob/master/CODE_OF_CONDUCT.md)
