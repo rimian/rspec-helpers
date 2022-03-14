@@ -1,33 +1,35 @@
 require 'spec_helper'
 
 class SmokeTest
-  def self.run
+  def self.run(ctx, vars)
+    [ctx, vars].join
   end
 end
 
 RSpec.configure do |config|
-  def my_context_helper(arg)
-    @my_var = arg
+  def context_helper(&block)
+    let(:ctx) { block.call }
   end
 
-  def my_operation_helper(&block)
-    operation = block.call if block_given?
+  def vars_helper(&block)
+    let(:vars) { block.call }
+  end
 
-    # do some operation with the context
-    SmokeTest.run
+  def execute_subject
+    SmokeTest.run(ctx, vars)
   end
 end
 
-RSpec.describe SmokeTest do
-  subject { described_class }
+RSpec.describe  do
+  vars_helper do
+    3
+  end
 
-  my_context_helper 3
-
-  my_operation_helper do
+  context_helper do
     'hello world'
   end
 
-  it 'is nil' do
-    expect(subject.run).to be_nil
+  it do
+    expect(execute_subject).to eq 'hello world3'
   end
 end
