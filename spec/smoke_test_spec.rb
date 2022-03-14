@@ -6,7 +6,15 @@ class SmokeTest
   end
 end
 
+module MyHelper
+  def helper_method(ctx, vars)
+    SmokeTest.run(ctx, vars)
+  end
+end
+
 RSpec.configure do |config|
+  config.include MyHelper
+
   def context_helper(&block)
     let(:ctx) { block.call }
   end
@@ -16,7 +24,7 @@ RSpec.configure do |config|
   end
 
   def execute_subject
-    SmokeTest.run(ctx, vars)
+    helper_method(ctx, vars)
   end
 end
 
